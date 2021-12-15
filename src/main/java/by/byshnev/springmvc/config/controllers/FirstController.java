@@ -22,24 +22,45 @@ public class FirstController {
     }
 
     @GetMapping("/calculator")
-    public String calculatior(@RequestParam(value = "a", required = false) Integer a,
-                              @RequestParam(value = "b", required = false) Integer b,
-                              @RequestParam(value = "action", required = false) String action,
+    public String calculatior(@RequestParam("a") int a,
+                              @RequestParam("b") int b,
+                              @RequestParam("action") String action,
                               Model model) {
 
-        if (action.equals("multiplication")) {
-            action = String.valueOf(a * b);
+        double result;
+
+        switch (action) {
+            case "multiplication":
+                result = a * b;
+                break;
+            case "addition":
+                result = a + b;
+                break;
+            case "subtraction":
+                result = a - b;
+                break;
+            case "division":
+                result = a / (double)b;
+                break;
+            default:
+                result = 0;
+                break;
         }
-        if (action.equals("addition")) {
-            action = String.valueOf(a + b);
-        }
-        if (action.equals("subtraction")) {
-            action = String.valueOf(a - b);
-        }
-        if (action.equals("division")) {
-            action = String.valueOf(a / b);
-        }
-        model.addAttribute("calc", action);
+        model.addAttribute("calc", result);
+
+//        if (action.equals("multiplication")) {
+//            action = String.valueOf(a * b);
+//        }
+//        if (action.equals("addition")) {
+//            action = String.valueOf(a + b);
+//        }
+//        if (action.equals("subtraction")) {
+//            action = String.valueOf(a - b);
+//        }
+//        if (action.equals("division")) {
+//            action = String.valueOf(a / b);
+//        }
+//        model.addAttribute("calc", action);
 
         return "first/calculator";
     }
